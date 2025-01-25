@@ -1,65 +1,76 @@
 package ru.anafro.fitnessapp.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.em
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavHostController
-import ru.anafro.fitnessapp.navigation.NavigationRoutes
 
 @Composable
 fun ChangePasswordScreen(navHostController: NavHostController) {
-    var (oldPassword, setOldPassword) = remember { mutableStateOf("") }
-    var (newPassword, setNewPassword) = remember { mutableStateOf("") }
-    var (confirmPassword, setConfirmPassword) = remember { mutableStateOf("") }
+    var oldPassword by remember { mutableStateOf("") }
+    var newPassword by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Изменить пароль",
-            fontWeight = FontWeight.Bold,
-            fontSize = 3.em
+            text = "Change Password",
+            style = MaterialTheme.typography.headlineMedium
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(32.dp))
+
         OutlinedTextField(
             value = oldPassword,
-            onValueChange = setOldPassword,
-            label = { Text("Старый пароль") },
+            onValueChange = { oldPassword = it },
+            label = { Text("Old Password") },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
+
         OutlinedTextField(
             value = newPassword,
-            onValueChange = setNewPassword,
-            label = { Text("Новый пароль") },
+            onValueChange = { newPassword = it },
+            label = { Text("New Password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm New Password") },
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = setConfirmPassword,
-            label = { Text("Повторите пароль") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(24.dp))
+
         Button(
-            onClick = { navHostController.popBackStack() },
+            onClick = {
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Принять")
+            Text("Save")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        TextButton(
+            onClick = {
+                navHostController.popBackStack()
+            }
+        ) {
+            Text("Back")
         }
     }
 }
