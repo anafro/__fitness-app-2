@@ -50,6 +50,11 @@ fun ProfileScreen(navHostController: NavHostController) {
 
         Button(
             onClick = {
+                authViewModel.logout(
+                onSuccess = {
+                    navController.navigate(NavigationRoutes.LOGIN)
+                }
+            )
             },
             modifier = Modifier.fillMaxWidth()
         ) {

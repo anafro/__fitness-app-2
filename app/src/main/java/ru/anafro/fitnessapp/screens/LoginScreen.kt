@@ -80,7 +80,18 @@ fun LoginScreen(navHostController: NavHostController) {
                 .fillMaxWidth()
         )
         Button(
-            onClick = { navHostController.navigate(NavigationRoutes.ACTIVITY) },
+            onClick = {
+                val user = User(username, password)
+                authViewModel.login(
+                    user,
+                    onSuccess = {
+                        navController.navigate(NavigationRoutes.ACTIVITY)
+                    },
+                    onError = {
+                        Toast.makeText(LocalContext.current, "Login failed", Toast.LENGTH_SHORT).show()
+                    }
+                )
+            },,
             modifier = Modifier
                 .layoutId("loginButton")
                 .padding(vertical = 6.dp)
